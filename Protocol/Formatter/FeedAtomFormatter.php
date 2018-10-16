@@ -95,7 +95,7 @@ class FeedAtomFormatter extends FeedFormatter
         $content->setAttribute('type', self::CONTENT_TYPE_HTML);
         $elements[] = $content;
 
-        if (!is_null($item->getComment())) {
+        if (!empty($item->getComment())) {
             $comments = $document->createElement('link');
             $comments->setAttribute('href', $item->getComment());
             $comments->setAttribute('rel', 'related');
@@ -103,7 +103,7 @@ class FeedAtomFormatter extends FeedFormatter
             $elements[] = $comments;
         }
 
-        if (!is_null($item->getAuthor())) {
+        if (!empty($item->getAuthor())) {
             $author = $document->createElement('author');
             $author->appendChild($document->createElement('name', $item->getAuthor()));
 

@@ -68,8 +68,13 @@ class FeedRssFormatter extends FeedFormatter
         $elements[] = $document->createElement('link', $item->getLink());
         $elements[] = $document->createElement('guid', $item->getPublicId());
         $elements[] = $document->createElement('pubDate', $item->getUpdated()->format(\DateTime::RSS));
-        $elements[] = $document->createElement('comments', $item->getComment());
-        $elements[] = $document->createElement('description', htmlspecialchars($item->getDescription(), ENT_COMPAT, 'UTF-8'));
+        if (!empty($item->getComment())) {
+            $elements[] = $document->createElement('comments', $item->getComment());
+        }
+
+        if (!empty($item->getDescription())) {
+            $elements[] = $document->createElement('description', htmlspecialchars($item->getDescription(), ENT_COMPAT, 'UTF-8'));
+        }
 
         $mediaCount = 0;
         foreach ($item->getMedias() as $media) {
@@ -94,7 +99,7 @@ class FeedRssFormatter extends FeedFormatter
             $mediaCount++;
         }
 
-        if (!is_null($item->getAuthor())) {
+        if (!empty($item->getAuthor())) {
             $elements[] = $document->createElement('author', $item->getAuthor());
         }
         foreach ($elements as $element) {
